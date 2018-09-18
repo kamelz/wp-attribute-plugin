@@ -1,0 +1,2 @@
+- when deactivate save database dump
+- check for database dump if exists
