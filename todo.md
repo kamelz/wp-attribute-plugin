@@ -10,3 +10,5 @@
 - hook each post in wordpress on load to render category attributes.
 
 - Choose a plugin name.
+
+- Create http class
