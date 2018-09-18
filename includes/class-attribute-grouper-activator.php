@@ -16,7 +16,7 @@ class AttributeGrouperActivator extends Moderator{
 
 	public function addGroupsPage(){
 		$pageTitle="Attribute Grouper";
-		$menu_title="Groups";
+		$menu_title="Attribute";
 		$capability="edit_theme_options";
 		$menuSlug="attribute_grouper";
 
@@ -24,7 +24,7 @@ class AttributeGrouperActivator extends Moderator{
 	}
 
 	public function groupView(){
-
+		 $this->render('view');
 	}
 
 }

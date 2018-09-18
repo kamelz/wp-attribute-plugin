@@ -6,8 +6,7 @@ class Moderator{
 	
 	public $models = [
 		'Attribute',
-		'Group',
-		'AttributeGroup'
+		'AttributeCategory'
 	];
 	public $baseModel;
 
@@ -30,7 +29,10 @@ class Moderator{
 	protected function dropTables(){
 
 		$this->baseModel->drop($this->db->prefix.'attributes_grouper_attributes');
-		$this->baseModel->drop($this->db->prefix.'attributes_grouper_groups');
-		$this->baseModel->drop($this->db->prefix.'attributes_grouper_attribute_group');
+		$this->baseModel->drop($this->db->prefix.'attributes_grouper_attribute_category');
+	}
+
+	protected function render($view){
+		require_once plugin_dir_path( __FILE__ ) . "../templates/$view.php";
 	}
 }
