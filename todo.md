@@ -12,3 +12,5 @@
 - Choose a plugin name.
 
 - Create http class
+
+- Update readme file
