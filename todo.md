@@ -1,13 +1,12 @@
 - when deactivate save database dump
 - check for database dump if exists
-- attribute category wync
-- style attribute dashboard
+- attribute category sync (done)
+- style attribute dashboard (done)
 - attribute CRUD
 	- create (done)
-	- edit (view)
-	- update
-	- delete
-- hook each post in wordpress on load to render category attributes.
+	- update (done)
+	- delete (done)
+- hook each post in wordpress on load to render category attributes. (done)
 
 - Choose a plugin name.
 
