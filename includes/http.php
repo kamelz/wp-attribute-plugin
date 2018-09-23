@@ -44,7 +44,7 @@ else if(isset($_POST['create_attribute'])){
 	$formValidation->isIsset($_POST,['name','url','overview']);
 	$formValidation->isString($_POST['name']);
 	$formValidation->isUrl($_POST['url']);
-	$formValidation->isString($_POST['overview']);
+	// $formValidation->isString($_POST['overview']);
 	$path = $formValidation->uploaded('logo');
 	$formValidation->isUnique($_POST['name'],Attribute::class,'name');
 
