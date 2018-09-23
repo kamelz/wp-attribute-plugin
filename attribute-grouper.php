@@ -42,7 +42,7 @@ if(class_exists('AttributeGrouperActivator')){
 
 function activate_attribute_grouper() {
 
-  if (!current_user_can('edit_theme_options'))
+  if (!current_user_can('edit_posts'))
     {
       wp_die( __('You do not have sufficient permissions to access this page.') );
     }
