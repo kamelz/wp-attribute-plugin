@@ -1,9 +1,46 @@
 <?php
 
+$formValidation = new Validator();
 
-if(isset($_POST['create_attribute'])){
+if(isset($_POST['delete'])){
 
-	$formValidation = new Validator();
+	$formValidation->isIsset($_POST,['attributeID']);
+	$attribute = new Attribute();
+	$attribute->id = $_POST['attributeID'];
+	$attribute->delete();
+}
+
+else if(isset($_POST['update'])){
+	
+	$formValidation->isIsset($_POST,['name','url','attributeID','overview']);
+	$formValidation->isString($_POST['name']);
+	$formValidation->isUrl($_POST['url']);
+	$formValidation->isString($_POST['overview']);
+
+
+	if(!$formValidation->hasErrors()){
+
+		$attribute = new Attribute();
+		$attribute->name = $_POST['name'];
+		$attribute->url = $_POST['url'];
+		$attribute->overview = $_POST['overview'];
+		$attribute->categories = $_POST['categories'] ?? [];
+
+		$attribute->categories($_POST['categories']??[])->update($_POST['attributeID']);
+
+		echo '<div class="updated notice">Attribute updated successfully!.</div>';
+
+	}else{
+	
+		foreach ($formValidation->errors as $error) {
+				echo "<div class='error notice'>$error</div><br/>";
+		}
+	}
+
+}
+
+else if(isset($_POST['create_attribute'])){
+
 	$formValidation->isIsset($_POST,['name','url','overview']);
 	$formValidation->isString($_POST['name']);
 	$formValidation->isUrl($_POST['url']);
@@ -23,12 +60,12 @@ if(isset($_POST['create_attribute'])){
 
 		$attribute->categories($_POST['categories'])->save();
 
-		echo 'Attribute added successfully!.';
+				echo '<div class="updated notice">Attribute added successfully!.</div>';
 
 	}else{
 	
 		foreach ($formValidation->errors as $error) {
-				echo "<div>$error<div/><br/>";
+				echo "<div class='error notice'>$error</div><br/>";
 		}
 	}
 }
@@ -56,7 +93,8 @@ class Validator{
 		        if(is_wp_error($uploaded)){
 		                $this->errors[] = "Error uploading file: " . $uploaded->get_error_message();
 		        }else{
-		                echo "File upload successful!";
+		        		echo '<div class="updated notice">File upload successful!.</div>';
+	
 		        }
 
 		        return $path;
@@ -109,6 +147,7 @@ class Validator{
 	}
 
 	public function isString($name){
+		$name  = trim($name);
 		if(!preg_match("/^[a-zA-Z'-]+$/",$name)) { 
 
 			$this->errors[] ='Invalid name format';
