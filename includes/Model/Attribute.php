@@ -6,6 +6,7 @@ class Attribute extends BaseModel{
 	public $url;
 	public $logo;
 	public $relationTable;
+	public $categories;
 	public $hasCategory = false;
 
 	public function __construct()
@@ -13,6 +14,12 @@ class Attribute extends BaseModel{
 		parent::__construct();
 		$this->tableName = $this->db->prefix.'attributes_grouper_attributes';
 		$this->relationTable = $this->db->prefix.'attributes_grouper_attribute_category';
+	}
+
+	public function all(){
+		$query = "Select * from $this->tableName;";
+
+		return $this->db->get_results($query);
 	}
 
 	public function categories($categories){
@@ -54,29 +61,107 @@ class Attribute extends BaseModel{
 		];
 	}
 
-	public function update(){
+	public function delete(){
+
+		$this->db->delete($this->tableName,['id' => $this->id]);
+		$this->db->delete($this->relationTable,['attribute_id' => $this->id]);
+	}
+	public function update($attributeId){
 		
-		$this->db->update($this->tableName,['name' => $this->name],['id' => $this->id]);
+		$this->sync($attributeId);
+		$this->db->update($this->tableName,$this->payload(),['id' => $attributeId]);
 	}
 
+	public function sync($attributeId){
+		$query = "DELETE FROM $this->relationTable WHERE `attribute_id` = $attributeId";
+
+	$this->db->query($query);
+
+	foreach ($this->categories as $category) {
+			$this->db->insert($this->relationTable,[
+				'attribute_id' => $attributeId ,
+				'category_id' => $category,
+			]);	
+		}
+	}
+
+	public function getPostAttributes($postID){
+		$attributes = [];
+		$uniqueAttributes = [];
+		$categoreis = wp_get_post_categories($postID);
+
+		foreach($categoreis as $category){
+			$query = "SELECT * FROM $this->tableName as `a` join $this->relationTable as `ac` WHERE `a`.id = `ac`.attribute_id AND `ac`.category_id = $category ORDER by `ac`.category_id"; 
+			$attributes[] = $this->db->get_results($query);
+		}
+		
+		for($i = 0; $i<count($attributes); $i++){
+			foreach ($attributes[$i] as $attribute) {
+				$uniqueAttributes[$attribute->attribute_id] = $attribute;
+
+			}
+		}
+
+		return $uniqueAttributes;
+	}
+
+	public function getAttributes(){
+		
+		$query = "SELECT * FROM $this->tableName where 1"; 
+	
+		return $this->db->get_results($query);
+	}
+	
+	public function getAttributeCategories($attributeId){
+		$query = "select * from $this->relationTable where `attribute_id` = $attributeId";
+		return  $this->db->get_results($query);
+	}
 
 	public function render(){
-		$attributes = $this->db->get_results("SELECT * FROM $this->tableName where 1;");
+ 		$attributes = (new Attribute)->getAttributes();
 		$template = "";
 		$counter = 0;
+
+		$allCategories = get_categories(['exclude'=>1 ,'hide_empty' => FALSE]);
 		foreach ($attributes as $attribute) {
+			$attributeCategories = [];
+ 			foreach ($this->getAttributeCategories($attribute->id) as $category) {
+ 				$attributeCategories [] = (array)$category;
+ 			}
+ 		
+ 			$categoriesSelectBox  = "<select name='categories[]' multiple>";
+ 			foreach ($allCategories as $category) {
+ 				$inArray = false;
+ 				foreach ($attributeCategories as $key => $value) {
+ 					if(in_array($category->term_id,$value)){
+ 						$inArray = true;
+ 					}
+ 				}
+ 				if($inArray){
+
+ 					$categoriesSelectBox .= "<option selected value=$category->term_id > $category->name </option>";				
+ 				}else{
+ 			
+ 					$categoriesSelectBox .= "<option value=$category->term_id > $category->name </option>";				
+ 				}
+ 			}
+
+ 			$categoriesSelectBox .= "</select>";
+
 			$stripedClass = $counter %2 == 0 ?'alternate':'';
-			$counter++;
-			$updateForm = "<form method='POST' action=''>";
-			$updateForm .= "<input type='text' name='name' value=$attribute->name />";
-			$updateForm .= "<input type='hidden' name='id' value=$attribute->id />";
-			$updateForm .= "<input type='hidden' name='update_attribute'/>";
-			$updateForm .= "</form>";
 
 			$template .= "<tr class=$stripedClass>";
-			$template .= "<td class='author column-author'> $attribute->id </td>";
-			$template .= "<td class='author column-author'> $updateForm </td>";
+			$template .= "<form method='POST' action=''>";
+			$template .= "<input type='hidden' name='attributeID' value=$attribute->id />";
+			$template .= "<td class='author column-author'> <img class='attachment-60x60 size-60x60' height='60' width='60'  src='$attribute->logo' /></td>";
+			$template .= "<td class='author column-author'> <input type='text' name='name' value=$attribute->name /> </td>";
+			$template .= "<td class='author column-author'> <input type='text' name='url' value=$attribute->url /></td>";
+			$template .= "<td class='author column-author'> <textarea name='overview' >$attribute->overview </textarea> </td>";
+			$template .= "<td class='author column-author'> $categoriesSelectBox </td>";
+			$template .= "<td class='author column-author'> <input type='submit' name='delete' class='delete-btn' value='Delete'/> <input class='update-btn' type='submit' name='update' value='Update'/>  </td>";
 			$template .= "</tr>";
+			$template .= "</form>";
+			$counter++;
 		}
 	
 		echo $template;

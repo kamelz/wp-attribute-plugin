@@ -6,7 +6,24 @@ class AttributeGrouperActivator extends Moderator{
 	{
 		parent::__construct();
 		add_action('admin_menu',[$this,'addGroupsPage']);
+
+		add_filter( "the_content", [$this,'displayAttributes'] );
+
 	}
+
+
+	public function displayAttributes(){
+		if (is_single()) {  
+			$attributes = (new Attribute)->getPostAttributes(get_the_ID());
+			$html  = "<ul>";
+			foreach ($attributes as $attribute) {
+				$html  .= "<li> <a href=".$attribute->url.">$attribute->name</li>";
+			}
+			$html .= "</ul>";
+		}
+
+		return $html;
+		}
 
 	public function activate() {
 		
@@ -21,10 +38,10 @@ class AttributeGrouperActivator extends Moderator{
 		$menuSlug="attribute_grouper";
 
 		add_menu_page($pageTitle,$menu_title,$capability,$menuSlug,[$this,'groupView'],'dashicons-groups',111);
+	
 	}
 
 	public function groupView(){
 		 $this->render('view');
 	}
-
 }

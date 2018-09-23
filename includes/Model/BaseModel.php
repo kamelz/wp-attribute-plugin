@@ -5,6 +5,8 @@ class BaseModel{
 	public $db;
 	public $model;
 	public $tableName;
+	public $hasWhere = false;
+	public $where;
 
 	public function __construct()
 	{
@@ -31,5 +33,11 @@ class BaseModel{
 
 		$query =" DROP TABLE IF EXISTS $tableName; ";		
 		$this->db->query($query);
+	}
+
+	public function where($codition,$operator ="=",$value){
+		$this->hasWhere = true;	
+		$this->where = "where $codition $operator $value";
+		return $this;
 	}
 }
