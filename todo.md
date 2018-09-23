@@ -13,3 +13,4 @@
 - Create http class
 
 - Update readme file
+- give permission to the author 

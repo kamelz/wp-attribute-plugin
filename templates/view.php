@@ -2,6 +2,10 @@
 include plugin_dir_path( __FILE__ ) . '../includes/http.php';
 $categories = get_categories(['exclude'=>1 ,'hide_empty' => FALSE]);
 ?>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
 <style type="text/css">
 .delete-btn{
 	background-color: #ad1515;
@@ -150,3 +154,11 @@ width: 100px;
 		</div>
 	</div>
 </div>
+
+<script>
+	
+	jQuery(document).ready(function() {
+    	jQuery('select').select2();
+	});
+
+</script>
