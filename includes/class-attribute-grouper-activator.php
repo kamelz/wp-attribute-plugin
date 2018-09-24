@@ -20,9 +20,9 @@ class AttributeGrouperActivator extends Moderator{
 				$html  .= "<li> <a href=".$attribute->url.">$attribute->name</li>";
 			}
 			$html .= "</ul>";
-		}
-
 		return $html;
+		}
+		
 		}
 
 	public function activate() {

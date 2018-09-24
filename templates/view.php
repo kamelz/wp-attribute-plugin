@@ -67,6 +67,10 @@ padding: 8px;
 letter-spacing: .09em;
 text-transform: uppercase;
 }
+.rtl{
+	direction: rtl;
+}
+
 .flex-outer > li > label,
 .flex-outer li p {
 flex: 1 0 120px;
@@ -97,7 +101,7 @@ border-radius: 2px;
 width: 100px;
 }
 </style>
-<table class="wp-list-table widefat fixed ">
+<table class="wp-list-table widefat fixed rtl">
 	<thead>
 		<tr>
 			<th class="manage-column column-author">#</th>
@@ -115,7 +119,7 @@ width: 100px;
 	</tbody>
 </table>
 <br>
-<div id="poststuff">
+<div id="poststuff rtl">
 	<div class="postbox">
 		<h2 style='cursor:auto'class="hndle ui-sortable-handle"><span>Add Attributes</span></h2>
 		<div class="container">
