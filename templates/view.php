@@ -100,6 +100,9 @@ border-radius: 2px;
 .flex-inner li {
 width: 100px;
 }
+.categories-select span.select2 {
+	width: 201px!important;
+}
 </style>
 <table class="wp-list-table widefat fixed rtl">
 	<thead>
@@ -119,7 +122,7 @@ width: 100px;
 	</tbody>
 </table>
 <br>
-<div id="poststuff rtl">
+<div id="poststuff 	">
 	<div class="postbox">
 		<h2 style='cursor:auto'class="hndle ui-sortable-handle"><span>Add Attributes</span></h2>
 		<div class="container">

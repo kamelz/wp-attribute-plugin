@@ -157,7 +157,7 @@ class Attribute extends BaseModel{
 			$template .= "<td class='author column-author'> <input type='text' name='name' value=$attribute->name /> </td>";
 			$template .= "<td class='author column-author'> <input type='text' name='url' value=$attribute->url /></td>";
 			$template .= "<td class='author column-author'> <textarea name='overview' >$attribute->overview </textarea> </td>";
-			$template .= "<td class='author column-author'> $categoriesSelectBox </td>";
+			$template .= "<td class='categories-select author column-author'> $categoriesSelectBox </td>";
 			$template .= "<td class='author column-author'> <input type='submit' name='delete' class='delete-btn' value='Delete'/> <input class='update-btn' type='submit' name='update' value='Update'/>  </td>";
 			$template .= "</tr>";
 			$template .= "</form>";
