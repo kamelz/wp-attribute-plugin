@@ -22,7 +22,7 @@ class AttributeGrouperActivator extends Moderator{
 			$html .= "</ul>";
 		return $html;
 		}
-		
+		return get_the_content();
 		}
 
 	public function activate() {
