@@ -142,12 +142,14 @@ width: 100px;
 						<textarea id="overview" name="overview"></textarea>
 					</li>
 					<li>
-						<label >Select on or more categories</label>
+					
 						<select multiple="true" id="categories" name="categories[]">
 							<?php foreach($categories as $category){?>
 							<option value="<?php echo $category->term_id?>"> <?php echo $category->name; ?></option>
 							<?php }?>
 						</select>
+							<label >Select on or more categories</label>
+						<div>Select All <input type='checkbox' onchange=selectAll(this) /></div>
 					</li>
 					<li>
 						<label for="logo">logo:</label>
