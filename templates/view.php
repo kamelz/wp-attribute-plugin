@@ -165,7 +165,17 @@ width: 100px;
 <script>
 	
 	jQuery(document).ready(function() {
-    	jQuery('select').select2();
+		if (!jQuery.fn.select2) {
+  			jQuery('select').select2();
+		}
 	});
+
+	function selectAll(elem){
+	
+		for(var i=0; i< elem.parentElement.parentElement.childNodes[1].options.length; i++){
+			elem.parentElement.parentElement.childNodes[1].options[i].selected = elem.checked;
+		}
+			jQuery('select').select2();
+	}
 
 </script>

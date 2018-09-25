@@ -147,6 +147,7 @@ class Attribute extends BaseModel{
  			}
 
  			$categoriesSelectBox .= "</select>";
+ 			$categoriesSelectBox .= "<div>Select All <input type='checkbox' onchange=selectAll(this) /></div>";
 
 			$stripedClass = $counter %2 == 0 ?'alternate':'';
 
