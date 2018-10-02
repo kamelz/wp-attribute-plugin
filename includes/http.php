@@ -1,11 +1,11 @@
-<?php
+<?php namespace AG\Includes;
 
 $formValidation = new Validator();
 
 if(isset($_POST['delete'])){
 
 	$formValidation->isIsset($_POST,['attributeID']);
-	$attribute = new Attribute();
+	$attribute = new  AG\Includes\Model\Attribute();
 	$attribute->id = $_POST['attributeID'];
 	$attribute->delete();
 }
@@ -20,7 +20,7 @@ else if(isset($_POST['update'])){
 
 	if(!$formValidation->hasErrors()){
 
-		$attribute = new Attribute();
+		$attribute = new AG\Includes\Model\Attribute();
 		$attribute->name = $_POST['name'];
 		$attribute->url = $_POST['url'];
 		$attribute->overview = $_POST['overview'];
@@ -46,13 +46,13 @@ else if(isset($_POST['create_attribute'])){
 	$formValidation->isUrl($_POST['url']);
 	// $formValidation->isString($_POST['overview']);
 	$path = $formValidation->uploaded('logo');
-	$formValidation->isUnique($_POST['name'],Attribute::class,'name');
+	$formValidation->isUnique($_POST['name'], AG\Includes\Model\Attribute::class,'name');
 
 
 
 	if(!$formValidation->hasErrors()){
 
-		$attribute = new Attribute();
+		$attribute = new AG\Includes\Model\Attribute();
 		$attribute->name = $_POST['name'];
 		$attribute->url = $_POST['url'];
 		$attribute->logo = $path;

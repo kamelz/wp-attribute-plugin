@@ -1,4 +1,4 @@
-<?php
+<?php namespace AG\Includes\Model;
 
 class BaseModel{
 

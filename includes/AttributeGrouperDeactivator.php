@@ -1,4 +1,4 @@
-<?php
+<?php namespace AG\Includes;
 
 class AttributeGrouperDeactivator extends Moderator{
 

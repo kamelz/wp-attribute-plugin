@@ -1,6 +1,7 @@
 <?php
 include plugin_dir_path( __FILE__ ) . '../includes/http.php';
 $categories = get_categories(['exclude'=>1 ,'hide_empty' => FALSE]);
+die(var_dump(get_locale()));
 ?>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
@@ -104,15 +105,16 @@ width: 100px;
 	width: 201px!important;
 }
 </style>
+
 <table class="wp-list-table widefat fixed rtl">
 	<thead>
 		<tr>
 			<th class="manage-column column-author">#</th>
-			<th class="manage-column column-author">Attribute</th>
-			<th class="manage-column column-author">URL</th>
-			<th class="manage-column column-author">Overview</th>
-			<th class="manage-column column-author">Categories</th>
-			<th class="manage-column column-author">Action</th>
+			<th class="manage-column column-author"><?php echo AG\Includes\Language::lang('attribute');?></th>
+			<th class="manage-column column-author"><?php echo AG\Includes\Language::lang('url');?></th>
+			<th class="manage-column column-author"><?php echo AG\Includes\Language::lang('overview');?></th>
+			<th class="manage-column column-author"><?php echo AG\Includes\Language::lang('categories');?></th>
+			<th class="manage-column column-author"><?php echo AG\Includes\Language::lang('action');?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -124,21 +126,21 @@ width: 100px;
 <br>
 <div id="poststuff 	">
 	<div class="postbox">
-		<h2 style='cursor:auto'class="hndle ui-sortable-handle"><span>Add Attributes</span></h2>
+		<h2 style='cursor:auto'class="hndle ui-sortable-handle"><span><?php echo AG\Includes\Language::lang('add-attribute');?></span></h2>
 		<div class="container">
 			<form method="post" class='flex' action="" enctype="multipart/form-data">
 				<ul class="flex-outer">
 					<li>
-						<label for="attribute">Attribute:</label>
-						<input type="text" name='name' id="attribute" placeholder="Attribute">
+						<label for="attribute"><?php echo AG\Includes\Language::lang('attribute');?>:</label>
+						<input type="text" name='name' id="attribute" placeholder=<?php echo AG\Includes\Language::lang('attribute');?>>
 					</li>
 					<li>
-						<label for="url">URL or Website:</label>
-						<input type="text" name='url' id="url" placeholder="URL">
+						<label for="url"><?php echo AG\Includes\Language::lang('url-or-website');?>:</label>
+						<input type="text" name='url' id="url" placeholder=<?php echo AG\Includes\Language::lang('url');?>>
 					</li>
 					
 					<li>
-						<label for="overview">Overview:</label>
+						<label for="overview"><?php echo AG\Includes\Language::lang('overview');?>:</label>
 						<textarea id="overview" name="overview"></textarea>
 					</li>
 					<li>
@@ -148,15 +150,15 @@ width: 100px;
 							<option value="<?php echo $category->term_id?>"> <?php echo $category->name; ?></option>
 							<?php }?>
 						</select>
-							<label >Select on or more categories</label>
-						<div>Select All <input type='checkbox' onchange=selectAll(this) /></div>
+							<label ><?php echo AG\Includes\Language::lang('select-categoreis');?></label>
+						<div><?php echo AG\Includes\Language::lang('select-all');?> <input type='checkbox' onchange=selectAll(this) /></div>
 					</li>
 					<li>
-						<label for="logo">logo:</label>
-						<input type="file" name='logo' id="logo" placeholder="Logo">
+						<label for="logo"><?php echo AG\Includes\Language::lang('logo');?>:</label>
+						<input type="file" name='logo' id="logo" placeholder=<?php echo AG\Includes\Language::lang('logo');?>>
 					</li>
 					<li>
-						<input type="submit" name='create_attribute' class='submit-btn' value='Submit'/>
+						<input type="submit" name='create_attribute' class='submit-btn' value=<?php echo AG\Includes\Language::lang('submit');?> />
 					</li>
 				</ul>
 			</form>

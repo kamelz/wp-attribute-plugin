@@ -1,4 +1,4 @@
-<?php
+<?php  namespace AG\Includes\Model;
 
 class Attribute extends BaseModel{
 	
@@ -118,7 +118,7 @@ class Attribute extends BaseModel{
 	}
 
 	public function render(){
- 		$attributes = (new Attribute)->getAttributes();
+ 		$attributes = $this->getAttributes();
 		$template = "";
 		$counter = 0;
 

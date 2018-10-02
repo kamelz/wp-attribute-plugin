@@ -1,4 +1,7 @@
-<?php
+<?php namespace AG\Includes;
+
+ use  AG\Includes\Moderator;
+ use  AG\Includes\Model\Attribute;
 
 class AttributeGrouperActivator extends Moderator{
 
@@ -8,7 +11,7 @@ class AttributeGrouperActivator extends Moderator{
 		add_action('admin_menu',[$this,'addGroupsPage']);
 
 		add_filter( "the_content", [$this,'displayAttributes'] );
-
+		
 	}
 
 

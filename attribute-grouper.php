@@ -1,4 +1,6 @@
-<?php
+<?php namespace AG;
+
+require_once 'vendor/autoload.php';
 
 /**
  * @package           Attribute grouper
@@ -16,39 +18,51 @@
  * Domain Path:       /languages
  */
 
+use AG\Includes\Bootstrap;
 
-// If this file is called directly, abort.
-if ( ! defined( 'ABSPATH' ) ) {
-	die;
+class AttributeGrouperMain{
+
+	function __construct()
+	{ 
+		if(!$this->isWordPress()) die;
+
+		define( 'ATTRIBUTE_TAGGER_VERSION', '1.0.0' );
+		
+		$this->bootstrap();
+	}
+
+	/**
+	 * Register the plguin assets and shortcodes.
+	 * @param  Bootstrap $app          
+	 */
+	public function bootstrap(){
+		
+		$app = new Bootstrap();
+
+		$app->registerActivationHook();
+		$app->registerDeactivationHook();
+	}
+
+	/**
+	 * If this file is called directly, abort.
+	 * @return bool 
+	 */
+	public function isWordPress(){
+
+		return defined( 'ABSPATH' );
+	}	
 }
+(new AttributeGrouperMain());
 
-if(! function_exists('add_action')){
-	die;
-}
 
-/**
- * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
- */
-define( 'ATTRIBUTE_TAGGER_VERSION', '1.0.0' );
-
-require_once plugin_dir_path( __FILE__ ) . 'loader.php';
+// require_once plugin_dir_path( __FILE__ ) . 'loader.php';
 
 
 if(class_exists('AttributeGrouperActivator')){
 	$activator = new AttributeGrouperActivator();
 }
 
-function activate_attribute_grouper() {
 
-  if (!current_user_can('edit_posts'))
-    {
-      wp_die( __('You do not have sufficient permissions to access this page.') );
-    }
-
-	(new AttributeGrouperActivator)->activate();
-}
 	
 /**
  * The code that runs during plugin deactivation.
@@ -59,6 +73,3 @@ function deactivate_attribute_grouper() {
 }
 
 
-
-register_activation_hook( __FILE__, 'activate_attribute_grouper' );
-register_deactivation_hook( __FILE__, 'deactivate_attribute_grouper' );

@@ -1,5 +1,6 @@
-<?php
+<?php namespace AG\Includes;
 
+use AG\Includes\Model\BaseModel;
 class Moderator{
 	
 	public $db;

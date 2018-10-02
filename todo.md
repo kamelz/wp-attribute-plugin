@@ -19,3 +19,8 @@
 - languages
 
 - shortcode
+
+- add namespaces
+
+- Files namespace bug
+	
